@@ -241,9 +241,7 @@ body  {
 .detail-button {
     display: inline-block;
     padding: 12px 25px;
-    /* === COLOR DEL BOTÓN A JUEGO CON EL SOBRE === */
     background-color: var(--envelope-clr-bg); 
-    /* =========================================== */
     color: white !important;
     text-decoration: none;
     border-radius: 50px;
@@ -254,7 +252,7 @@ body  {
     transition: all 0.3s ease;
 }
 .detail-button:hover {
-    background-color: var(--envelope-clr-bg-side); /* Tono más oscuro del sobre para hover */
+    background-color: var(--envelope-clr-bg-side);
     transform: translateY(-2px);
     box-shadow: 0 6px 10px rgba(0,0,0,0.2);
 }
@@ -299,6 +297,7 @@ body  {
         if (musica) {
             musica.muted = false;
             musica.play().catch(e => console.error("Música no pudo iniciar:", e));
+            // Guardamos el estado para las otras páginas
             localStorage.setItem('musicaReproduciendo', 'true'); 
         }
         
@@ -308,18 +307,19 @@ body  {
 
     sobre.addEventListener('click', abrirInvitacion);
 
-    document.addEventListener('contextmenu', function (e) {
-        e.preventDefault();
+    // Guardar el tiempo actual antes de salir de la página
+    window.addEventListener('pagehide', () => {
+        if (musica && !musica.paused) {
+            // Guarda el estado y el tiempo exacto
+            localStorage.setItem('musicaReproduciendo', 'true');
+            localStorage.setItem('musicaTiempo', musica.currentTime);
+        }
     });
-  
+
+    // --- Scripts de bloqueo ---
+    document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'F12') {
-            e.preventDefault();
-        }
-        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
-            e.preventDefault();
-        }
-        if (e.ctrlKey && e.key === 'u') {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) {
             e.preventDefault();
         }
     });
