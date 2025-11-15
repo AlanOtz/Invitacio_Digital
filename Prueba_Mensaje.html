@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invitación Digital con Música</title>
+    <style>
+        body {
+            text-align: center;
+            padding-top: 50px;
+            cursor: pointer; 
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body id="cuerpoInvitacion">
+
+    <audio id="musicaFondo" muted>
+        <source src="Audio_Fondo.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <h1>Prueba de Enlace y Música</h1>
+
+    <a href="https://wa.me/7296772883?text=Prueba" target="_blank">
+        📲 Enviar "Prueba" por WhatsApp
+    </a>
+
+    <p>
+        <br>
+        **¡Importante!** Haz clic en cualquier parte de esta página para <br> 
+        habilitar la música de fondo.
+    </p>
+
+    <script>
+        const musica = document.getElementById('musicaFondo');
+        const cuerpo = document.getElementById('cuerpoInvitacion');
+
+        function iniciarMusica() {
+            musica.muted = false;
+            musica.play()
+                .then(() => {
+                    console.log("Música iniciada por interacción del usuario.");
+                    cuerpo.removeEventListener('click', iniciarMusica);
+                    cuerpo.style.cursor = 'default';
+                })
+                .catch(error => {
+                    console.error("Fallo al iniciar la música:", error);
+                });
+        }
+
+        cuerpo.addEventListener('click', iniciarMusica);
+    </script>
+
+</body>
+</html>
