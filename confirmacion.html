@@ -104,24 +104,30 @@
 <script>
     const musica = document.getElementById('musicaFondo');
 
-    // Verificar si la música se estaba reproduciendo en la página anterior
-    if (localStorage.getItem('musicaReproduciendo') === 'true') {
-        musica.muted = false;
-        musica.play().catch(e => console.error("Música no pudo iniciar en confirmacion.html:", e));
-    }
-
-    document.addEventListener('contextmenu', function (e) {
-        e.preventDefault();
+    // Cargar el estado de la música al cargar la página
+    window.addEventListener('load', () => {
+        const estaSonando = localStorage.getItem('musicaReproduciendo');
+        const tiempoGuardado = localStorage.getItem('musicaTiempo');
+        
+        if (estaSonando === 'true' && tiempoGuardado) {
+            musica.currentTime = parseFloat(tiempoGuardado);
+            musica.muted = false;
+            musica.play().catch(e => console.error("Música no pudo iniciar en confirmacion.html:", e));
+        }
     });
-  
+
+    // Guardar el tiempo actual antes de salir de ESTA página
+    window.addEventListener('pagehide', () => {
+        if (musica && !musica.paused) {
+            localStorage.setItem('musicaTiempo', musica.currentTime);
+            localStorage.setItem('musicaReproduciendo', 'true');
+        }
+    });
+
+    // --- Scripts de bloqueo ---
+    document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'F12') {
-            e.preventDefault();
-        }
-        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
-            e.preventDefault();
-        }
-        if (e.ctrlKey && e.key === 'u') {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) {
             e.preventDefault();
         }
     });
