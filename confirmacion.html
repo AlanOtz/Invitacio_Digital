@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación de Asistencia - ¡Mis Quince Años!</title>
+    <meta name="google-adsense-account" content="ca-pub-4704501585981299">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url(https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap);
+
+        body {
+            font-family: "Quicksand", sans-serif;
+            background: linear-gradient(to bottom right, #eaf9f6, #f3fdfb, #e6f6f2); /* Fondo a juego */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2em;
+            text-align: center;
+            flex-direction: column;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .content-wrapper {
+            background-color: #fff;
+            padding: 2.5em;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 7vw, 3.5rem);
+            color: #8bb7a6; /* Color del sobre */
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+            line-height: 1.6;
+            color: #555;
+            margin: 0;
+        }
+
+        .whatsapp-link {
+            display: inline-block;
+            padding: 18px 35px;
+            background-color: #25d366; /* Verde WhatsApp */
+            color: white !important;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-top: 2em;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-weight: bold;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+        }
+        .whatsapp-link:hover {
+            background-color: #1da851;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button {
+            margin-top: 2em;
+            padding: 10px 20px;
+            background-color: #a3c9bc; /* Tono del sobre, pero más claro */
+            color: #fff !important;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #8bb7a6; /* Color del sobre */
+        }
+
+    </style>
+</head>
+<body>
+
+<audio id="musicaFondo" src="Audio_Fondo.mp3" preload="auto" loop muted></audio>
+
+<div class="content-wrapper">
+    <h1>¡Confirma tu Asistencia!</h1>
+    <p>Estamos muy emocionados de compartir este día tan especial contigo.</p>
+    <p>Por favor, ayúdanos a organizar todo confirmando tu asistencia a los XV años de Zyanya Danae Martínez Sandoval a través de WhatsApp.</p>
+    <a href="https://wa.me/7296772883?text=¡Hola! Confirmo mi asistencia a los XV años de Zyanya Danae Martínez Sandoval. ¡Nos vemos!" target="_blank" class="whatsapp-link">
+        📲 Confirmar Asistencia por WhatsApp
+    </a>
+    <a href="mas_detalles.html" class="back-button">Volver a los Detalles</a>
+</div>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4704501585981299"
+    crossorigin="anonymous"></script>
+
+<script>
+    const musica = document.getElementById('musicaFondo');
+
+    // Verificar si la música se estaba reproduciendo en la página anterior
+    if (localStorage.getItem('musicaReproduciendo') === 'true') {
+        musica.muted = false;
+        musica.play().catch(e => console.error("Música no pudo iniciar en confirmacion.html:", e));
+    }
+
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+    });
+  
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'F12') {
+            e.preventDefault();
+        }
+        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+            e.preventDefault();
+        }
+        if (e.ctrlKey && e.key === 'u') {
+            e.preventDefault();
+        }
+    });
+</script>
+
+</body>
+</html>
