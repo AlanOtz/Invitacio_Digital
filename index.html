@@ -1,54 +1,329 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Invitación Digital con Música</title>
-    <style>
-        body {
-            text-align: center;
-            padding-top: 50px;
-            cursor: pointer; 
-            min-height: 100vh;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>¡Tienes una Invitación!</title>
+  <meta name="google-adsense-account" content="ca-pub-4704501585981299">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body id="cuerpoInvitacion">
+<body>
 
-    <audio id="musicaFondo" muted>
-        <source src="Audio_Fondo.mp3" type="audio/mpeg">
-        Tu navegador no soporta el elemento de audio.
-    </audio>
+<audio id="musicaFondo" src="Audio_Fondo.mp3" preload="auto" loop muted></audio>
 
-    <h1>Prueba de Enlace y Música</h1>
+<style>
+    @import url(https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap);
 
-    <a href="https://wa.me/7296772883?text=Prueba" target="_blank">
-        📲 Enviar "Prueba" por WhatsApp
-    </a>
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+body  {
+    font-family: "Quicksand", sans-serif;
+    background: linear-gradient(to bottom right, #eaf9f6, #f3fdfb, #e6f6f2); /* Fondo más claro y a juego */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 1rem;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+.envelope {
+    --duration: 1000ms;
 
-    <p>
-        <br>
-        **¡Importante!** Haz clic en cualquier parte de esta página para <br> 
-        habilitar la música de fondo.
-    </p>
+    --shadow-width: calc(var(--envelope-width) * 0.85);
+    --shadow-blur: 15px;
 
-    <script>
-        const musica = document.getElementById('musicaFondo');
-        const cuerpo = document.getElementById('cuerpoInvitacion');
+    --envelope-width: 300px;
+    --envelope-height: 175px;
+    
+    /* === COLORES DEL VESTIDO === */
+    --envelope-clr-bg: #8bb7a6; /* Verde menta del vestido */
+    --envelope-clr-bg-side: #7ba392; /* Tono más oscuro para los lados */
+    --envelope-clr-bg-bottom: #9ac9b8; /* Tono más claro para el borde inferior */
+    --envelope-clr-bg-top: #8bb7a6; /* Mismo que el principal */
+    --envelope-clr-txt: #fff;
+    /* =========================== */
 
-        function iniciarMusica() {
+    --envelope-transform-hover: rotateY(180deg);
+    --evelope-rotate-delay: calc(var(--duration) / 1);
+    --evelope-rotate-delay-hover: 0ms;
+
+    --letter-clr-bg: #fff;
+    --letter-clr-text: #555; /* Texto oscuro para contraste */
+    --letter-font-size: 1rem;
+    --letter-delay: 0ms;
+    
+    --letter-delay-hover: calc(var(--duration) * 0.8); 
+
+    --letter-height: calc(var(--envelope-height) - 2rem);
+    --letter-height-hover: calc(var(--envelope-height) * 2);
+
+    --fold-rotate: rotateX(0deg);
+    --fold-zindex-hover: 0;
+    --fold-rotate-hover: rotateX(180deg);
+    --fold-delay: calc(var(--duration) / 2);
+    --fold-delay-hover: calc(var(--duration) * .75);
+
+    --front-font-size: 1rem;
+
+    position: relative;
+    height: var(--envelope-height);
+    width: var(--envelope-width);
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+@media (min-width: 720px) {
+    .envelope {
+        --envelope-width: 500px;
+        --envelope-height: 250px;
+        --letter-font-size: 1.6rem;
+        --front-font-size: 1.25rem;
+        --letter-height-hover: calc(var(--envelope-height) * 2);
+    }
+    
+    .envelope.abierto .letter {
+        transform: translateX(-50%) translateY(-100px);
+    }
+}
+
+.envelope::after {
+    content: "";
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    width: var(--shadow-width);
+    height: 40px;
+    transition: var(--duration) ease-in-out;
+    transition-delay: var(--evelope-rotate-delay);
+    transform: var(--shadow-transform);
+    translate: -50% 0;
+    border-radius: 50%;
+    background: rgba(56, 6, 6, 0.4);
+    filter: blur(var(--shadow-blur));
+}
+
+.envelope.abierto {
+    --envelope-transform: var(--envelope-transform-hover, 0deg);
+    --evelope-rotate-delay: var(--evelope-rotate-delay-hover);
+    --shadow-transform: rotateY(180deg);
+    --fold-rotate: var(--fold-rotate-hover);
+    --fold-delay: var(--fold-delay-hover);
+    --fold-zindex: var(--fold-zindex-hover);
+    --letter-height: var(--letter-height-hover);
+    --letter-delay: var(--letter-delay-hover);
+    cursor: default;
+}
+
+.envelope-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: var(--duration) ease-in-out;
+    transition-delay: var(--evelope-rotate-delay);
+    transform-style: preserve-3d;
+    transform: var(--envelope-transform);
+    display: grid;
+}
+
+.envelope-front,
+.envelope-back {
+    position: relative;
+    grid-area: 1/1;
+    width: 100%;
+    height: 100%;
+    background-color: var(--envelope-clr-bg);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    isolation: isolate;
+}
+
+.envelope-front {
+    color: var(--envelope-clr-txt);
+    display: grid;
+    place-content: center;
+}
+.envelope-front .address {
+    text-align: center;
+    font-size: var(--front-font-size);
+}
+.envelope-front .address > p > span:first-child {
+    font-family: system-ui;
+    font-weight: 200;
+}
+.envelope-front .address > p > span:last-of-type {
+    font-weight: 800;
+}
+
+.envelope-back {
+    transform: rotateY(180deg);
+}
+.envelope-back::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background-image: conic-gradient(
+        transparent 60deg,
+        var(--envelope-clr-bg-side) 60deg 120deg,
+        var(--envelope-clr-bg-bottom) 120deg 240deg,
+        var(--envelope-clr-bg-side) 240deg 300deg,
+        transparent 300deg
+    );
+}
+.envelope-back .top-fold {
+    position: absolute;
+    inset: 0;
+    z-index: var(--fold-zindex, 10);
+    background-color: var(--envelope-clr-bg-top);
+    clip-path: polygon(0% 0%, 50% 55%, 100% 0%);
+    transform: var(--fold-rotate);
+    transform-origin: top;
+    transition: var(--duration) ease-in-out;
+    transition-delay: var(--fold-delay);
+}
+
+.letter {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    width: 90%;
+    height: var(--letter-height);
+    font-size: var(--letter-font-size);
+    transform: translateX(-50%) translateY(0);
+    z-index: 2;
+    transition: height var(--duration) ease-in-out var(--letter-delay),
+                transform var(--duration) ease-in-out var(--letter-delay),
+                z-index 0ms linear var(--letter-delay);
+    background: var(--letter-clr-bg);
+    padding: 1.2em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    justify-content: center;
+}
+
+.envelope.abierto .letter {
+    transform: translateX(-50%) translateY(-60px); 
+    z-index: 20; 
+}
+
+
+/* Estilos del contenido interno */
+.letter h1 {
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    color: var(--envelope-clr-bg);
+    margin-bottom: 0.25em;
+}
+.letter h2 {
+    font-size: clamp(1.2rem, 4.5vw, 1.8rem);
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+.letter p {
+    margin: 0.25em 0;
+    font-weight: bold;
+    color: #555;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    line-height: 1.4;
+}
+.detail-button {
+    display: inline-block;
+    padding: 12px 25px;
+    /* === COLOR DEL BOTÓN A JUEGO CON EL SOBRE === */
+    background-color: var(--envelope-clr-bg); 
+    /* =========================================== */
+    color: white !important;
+    text-decoration: none;
+    border-radius: 50px;
+    margin-top: 15px;
+    font-size: clamp(1rem, 3vw, 1.1rem);
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+.detail-button:hover {
+    background-color: var(--envelope-clr-bg-side); /* Tono más oscuro del sobre para hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+}
+
+</style>
+
+<div class="envelope" id="miSobre">
+    <div class="envelope-inner">
+        <div class="envelope-front">
+            <div class="address">
+                <p style="font-size: 1.5rem; font-weight: 700;">¡Tienes una invitación!</p>
+                <p><span>(Toca para abrir)</span></p>
+            </div>
+        </div>
+        <div class="envelope-back">
+            <div class="top-fold"></div>
+            
+            <div class="letter" id="miCarta">
+                <h1>¡Mis Quince Años!</h1>
+                <h2>Zyanya Danae Martínez Sandoval</h2>
+                <p>Te esperamos en:</p>
+                <p>Ixtlahuaca, México</p>
+                <p>El día 17 de enero del 2026</p>
+                <p>A las 14:00 hrs</p>
+                <a href="mas_detalles.html" class="detail-button" id="verDetallesBtn">
+                    Ver Detalles
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4704501585981299"
+    crossorigin="anonymous"></script>
+
+<script>
+    const musica = document.getElementById('musicaFondo');
+    const sobre = document.getElementById('miSobre');
+    const verDetallesBtn = document.getElementById('verDetallesBtn');
+
+    function abrirInvitacion() {
+        if (musica) {
             musica.muted = false;
-            musica.play()
-                .then(() => {
-                    console.log("Música iniciada por interacción del usuario.");
-                    cuerpo.removeEventListener('click', iniciarMusica);
-                    cuerpo.style.cursor = 'default';
-                })
-                .catch(error => {
-                    console.error("Fallo al iniciar la música:", error);
-                });
+            musica.play().catch(e => console.error("Música no pudo iniciar:", e));
+            localStorage.setItem('musicaReproduciendo', 'true'); 
         }
+        
+        sobre.classList.add('abierto');
+        sobre.removeEventListener('click', abrirInvitacion);
+    }
 
-        cuerpo.addEventListener('click', iniciarMusica);
-    </script>
+    sobre.addEventListener('click', abrirInvitacion);
+
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+    });
+  
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'F12') {
+            e.preventDefault();
+        }
+        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+            e.preventDefault();
+        }
+        if (e.ctrlKey && e.key === 'u') {
+            e.preventDefault();
+        }
+    });
+</script>
 
 </body>
 </html>
