@@ -10,59 +10,193 @@
 
         body {
             font-family: "Quicksand", sans-serif;
-            background: linear-gradient(to bottom right, #eaf9f6, #f3fdfb, #e6f6f2); /* Fondo a juego */
+            background: linear-gradient(to bottom right, #eaf9f6, #f3fdfb, #e6f6f2);
             color: #333;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
+            padding-top: 8em; /* Aumentado para dejar espacio a la cuenta regresiva */
+            padding-bottom: 5em;
+            overflow-y: auto;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 2em;
+            padding-left: 1em;
+            padding-right: 1em;
             text-align: center;
             flex-direction: column;
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* === ESTILOS CUENTA REGRESIVA === */
+        #countdown-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 10px 0;
+            z-index: 1002;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        #countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            text-align: center;
+        }
+        .time-block { display: flex; flex-direction: column; }
+        .time-block span:first-child { font-size: 1.5em; font-weight: 700; color: #8bb7a6; line-height: 1; }
+        .time-block span:last-child { font-size: 0.7em; text-transform: uppercase; color: #555; letter-spacing: 0.5px; }
+        @media (min-width: 720px) {
+            .time-block span:first-child { font-size: 2em; }
+            .time-block span:last-child { font-size: 0.8em; }
+        }
+        /* ================================ */
+
+        /* === ESTILOS DE LLUVIA === */
+        #animacion-lluvia {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        #animacion-lluvia span {
+            position: absolute;
+            top: -150px; 
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation-name: lluvia-anim;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            opacity: 0;
+        }
+        @keyframes lluvia-anim {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+        #animacion-lluvia span:nth-child(odd) { background-image: url('Sobre_Dinero.png'); }
+        #animacion-lluvia span:nth-child(even) { background-image: url('Regalo.png'); }
+        #animacion-lluvia span:nth-child(1) { left: 10%; width: 80px; height: 80px; animation-duration: 10s; animation-delay: 0s; }
+        #animacion-lluvia span:nth-child(2) { left: 20%; width: 50px; height: 50px; animation-duration: 12s; animation-delay: -3s; }
+        #animacion-lluvia span:nth-child(3) { left: 30%; width: 70px; height: 70px; animation-duration: 8s; animation-delay: -5s; }
+        #animacion-lluvia span:nth-child(4) { left: 40%; width: 90px; height: 90px; animation-duration: 9s; animation-delay: -1s; }
+        #animacion-lluvia span:nth-child(5) { left: 50%; width: 60px; height: 60px; animation-duration: 11s; animation-delay: -7s; }
+        #animacion-lluvia span:nth-child(6) { left: 60%; width: 85px; height: 85px; animation-duration: 10s; animation-delay: -4s; }
+        #animacion-lluvia span:nth-child(7) { left: 70%; width: 65px; height: 65px; animation-duration: 9s; animation-delay: -2s; }
+        #animacion-lluvia span:nth-child(8) { left: 80%; width: 90px; height: 90px; animation-duration: 13s; animation-delay: -6s; }
+        #animacion-lluvia span:nth-child(9) { left: 90%; width: 55px; height: 55px; animation-duration: 8s; animation-delay: -8s; }
+        #animacion-lluvia span:nth-child(10) { left: 15%; width: 75px; height: 75px; animation-duration: 10s; animation-delay: -5s; }
+        #animacion-lluvia span:nth-child(11) { left: 45%; width: 80px; height: 80px; animation-duration: 12s; animation-delay: -9s; }
+        #animacion-lluvia span:nth-child(12) { left: 85%; width: 60px; height: 60px; animation-duration: 9s; animation-delay: -10s; }
+        /* === FIN DE ESTILOS DE LLUVIA === */
+
         .content-wrapper {
             background-color: #fff;
-            padding: 2.5em;
+            padding: 2em;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             max-width: 600px;
-            width: 90%;
+            width: 95%;
             display: flex;
             flex-direction: column;
             gap: 1.5em;
             align-items: center;
+            position: relative;
+            z-index: 100;
         }
 
+        /* --- NUEVOS ESTILOS PARA DETALLES --- */
+        .section-divider {
+            width: 80%;
+            height: 2px;
+            background-color: #8bb7a6; /* Color del vestido */
+            border-radius: 2px;
+            opacity: 0.5;
+            margin: 10px 0;
+        }
+        
         h1 {
-            font-size: clamp(2rem, 7vw, 3.5rem);
-            color: #8bb7a6; /* Color del sobre */
-            margin-bottom: 0.5em;
+            font-size: clamp(2rem, 7vw, 3rem);
+            color: #8bb7a6;
+            margin: 0;
         }
         h2 {
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
             color: #555;
-            margin-top: 0;
+            margin: 0;
         }
-
-        p {
+        
+        .parents-section p {
             font-size: clamp(1.1rem, 3.5vw, 1.4rem);
             line-height: 1.6;
             color: #555;
             margin: 0;
+        }
+        .parents-section strong {
+            font-size: 1.1em;
+            color: #333;
+        }
+        
+        .location-section p {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            line-height: 1.5;
+            color: #555;
+            margin: 0;
+        }
+        
+        .location-button {
+            display: inline-block;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            background-color: #8bb7a6; /* Color del vestido */
+            color: white !important;
+            margin-top: 10px;
+            width: 80%;
+            max-width: 250px;
+        }
+        .location-button:hover {
+            background-color: #7ba392;
+            transform: translateY(-2px);
+        }
+        
+        .dresscode-section img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 8px;
+        }
+        .dresscode-section p {
+            font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+            font-weight: 700;
+            color: #333;
+        }
+        .dresscode-section .highlight {
+            font-size: 1.1em;
+            color: #8bb7a6; /* Color del vestido */
+            font-weight: 700;
         }
 
         .action-buttons {
             display: flex;
             flex-direction: column;
             gap: 1em;
-            margin-top: 2em;
+            margin-top: 1em;
             width: 100%;
             max-width: 300px;
         }
-
         .action-button {
             display: inline-block;
             padding: 15px 25px;
@@ -73,38 +207,23 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
             transition: all 0.3s ease;
         }
-
         .whatsapp-button {
-            background-color: #25d366; /* Verde WhatsApp */
+            background-color: #25d366;
             color: white !important;
         }
         .whatsapp-button:hover {
             background-color: #1da851;
             transform: translateY(-2px);
         }
-
         .back-button {
-            background-color: #a3c9bc; /* Tono del sobre, pero más claro */
-            color: #fff !important;
+            background-color: #ccc;
+            color: #333 !important;
         }
         .back-button:hover {
-            background-color: #8bb7a6; /* Color del sobre */
+            background-color: #bbb;
             transform: translateY(-2px);
         }
-
-        /* Mapa de ejemplo (solo para visualización) */
-        .map-placeholder {
-            width: 100%;
-            height: 250px;
-            background-color: #e0e0e0;
-            border-radius: 8px;
-            margin-top: 1.5em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #666;
-            font-style: italic;
-        }
+        /* ---------------------------------- */
 
     </style>
 </head>
@@ -112,27 +231,74 @@
 
 <audio id="musicaFondo" src="Audio_Fondo.mp3" preload="auto" loop muted></audio>
 
+<div id="countdown-banner">
+    <div id="countdown-timer">
+        <div class="time-block"><span id="dias">00</span><span>Días</span></div>
+        <div class="time-block"><span id="horas">00</span><span>Horas</span></div>
+        <div class="time-block"><span id="minutos">00</span><span>Min</span></div>
+        <div class="time-block"><span id="segundos">00</span><span>Seg</span></div>
+    </div>
+</div>
+
+<div id="animacion-lluvia">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+
 <div class="content-wrapper">
-    <h1>¡Más Detalles!</h1>
-    <h2>Ubicación del Evento</h2>
-    <p>La celebración de los XV años de Zyanya Danae Martínez Sandoval se llevará a cabo en:</p>
-    <p><strong>Salón de Eventos "El Campanario"</strong></p>
-    <p>Calle Principal #123, Colonia Centro</p>
-    <p>Ixtlahuaca, Estado de México</p>
-    
-    <div class="map-placeholder">
-        [Aquí iría un mapa incrustado de Google Maps]
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15024.46979603561!2d-99.8051795!3d19.571477!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d263b827e163d7%3A0x1d5f3088b3f2c5d1!2sIxtlahuaca%20de%20Ray%C3%B3n%2C%20M%C3%A9x.!5e0!3m2!1ses-419!2smx!4v1700445668471!5m2!1es-419!2smx" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+    <h1>¡Mis Quince Años!</h1>
+    <h2>Zyanya Danae Martínez Sandoval</h2>
+
+    <div class="section-divider"></div>
+
+    <div class="parents-section">
+        <p>Con la bendición de Dios y de mis padres:</p>
+        <p><strong>Ofelia Sandoval Garcia</strong></p>
+        <p><strong>Alejandro Martinez Reyes</strong></p>
+        <p>Tengo el honor de invitarte a celebrar conmigo.</p>
     </div>
 
-    <p>¡Te esperamos para celebrar juntos!</p>
+    <div class="section-divider"></div>
+
+    <div class="location-section">
+        <h2>Misa</h2>
+        <p>17 de enero de 2026, 14:00 hrs</p>
+        <p>Iglesia San Francisco de Asis</p>
+        <p>Ixtlahuaca, México</p>
+        <a href="https://maps.google.com/?q=Parroquia+San+Francisco+de+Asis,+Francisco+López+Rayón+No.+35,+Col.+Centro,+Ixtlahuaca,+México" target="_blank" class="location-button">
+            📍 Ver Iglesia
+        </a>
+    </div>
+
+    <div class="location-section">
+        <h2>Recepción</h2>
+        <p>(Al terminar la misa)</p>
+        <p>Hacienda las Acacias</p>
+        <a href="#" target="_blank" class="location-button">
+            📍 Ver Recepción
+        </a>
+    </div>
+    
+    <div class="section-divider"></div>
+
+    <div class="dresscode-section">
+        <h2>Código de Vestimenta</h2>
+        <p>Sport Elegante</p>
+        <img src="https://i.imgur.com/vT4b3gN.png" alt="Sport Elegante: Ellos Guapos, Ellas Divinas">
+        <p style="margin-top: 15px; font-size: 1.1em;">"Ellos Guapos, Ellas Divinas"</p>
+        <p class="highlight" style="margin-top: 10px;">Nota: El color Verde está reservado para la quinceañera.</p>
+    </div>
+    
+    <div class="section-divider"></div>
 
     <div class="action-buttons">
+        <p>Confirmación por WhatsApp (No se entregarán boletos)</p>
         <a href="confirmacion.html" class="action-button whatsapp-button">
             ✅ Ir a Confirmar Asistencia
         </a>
         <a href="index.html" class="action-button back-button">
-            Volver a la Invitación
+            Volver
         </a>
     </div>
 </div>
@@ -142,8 +308,30 @@
 
 <script>
     const musica = document.getElementById('musicaFondo');
+    
+    // --- LÓGICA DE LA CUENTA REGRESIVA ---
+    const fechaEvento = new Date("2026-01-17T14:00:00").getTime();
+    function actualizarCuentaRegresiva() {
+        const ahora = new Date().getTime();
+        const diferencia = fechaEvento - ahora;
+        if (diferencia < 0) {
+            document.getElementById("countdown-timer").innerHTML = "<div style='font-size: 1.2em; font-weight: 700; color: #8bb7a6;'>¡El gran día llegó!</div>";
+            clearInterval(intervaloCuenta);
+            return;
+        }
+        const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+        document.getElementById("dias").innerText = dias < 10 ? '0' + dias : dias;
+        document.getElementById("horas").innerText = horas < 10 ? '0' + horas : horas;
+        document.getElementById("minutos").innerText = minutos < 10 ? '0' + minutos : minutos;
+        document.getElementById("segundos").innerText = segundos < 10 ? '0' + segundos : segundos;
+    }
+    const intervaloCuenta = setInterval(actualizarCuentaRegresiva, 1000);
+    actualizarCuentaRegresiva();
 
-    // Cargar el estado de la música al cargar la página
+    // --- LÓGICA DE MÚSICA ---
     window.addEventListener('load', () => {
         const estaSonando = localStorage.getItem('musicaReproduciendo');
         const tiempoGuardado = localStorage.getItem('musicaTiempo');
@@ -151,11 +339,10 @@
         if (estaSonando === 'true' && tiempoGuardado) {
             musica.currentTime = parseFloat(tiempoGuardado);
             musica.muted = false;
-            musica.play().catch(e => console.error("Música no pudo iniciar en mas_detalles.html:", e));
+            musica.play().catch(e => console.error("Música no pudo iniciar:", e));
         }
     });
 
-    // Guardar el tiempo actual antes de salir de ESTA página
     window.addEventListener('pagehide', () => {
         if (musica && !musica.paused) {
             localStorage.setItem('musicaTiempo', musica.currentTime);
