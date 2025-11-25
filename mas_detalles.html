@@ -99,8 +99,8 @@
         /* === FIN DE ESTILOS DE LLUVIA === */
 
         .content-wrapper {
-            background-color: #fff;
-            /* IMPORTANTE: El padding aquí es 2em. Usaremos esto para calcular el borde */
+            /* CAMBIO DE COLOR AQUÍ: Se usó un tono menta claro extraído de la imagen */
+            background-color: #ebf8f6; 
             padding: 2em; 
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -112,7 +112,6 @@
             align-items: center;
             position: relative;
             z-index: 100;
-            /* Asegura que nada se salga del contenedor redondeado */
             overflow: hidden; 
         }
 
@@ -190,12 +189,10 @@
         .dresscode-image-wrapper {
             position: relative;
             width: 100%;
-            /* Eliminamos el max-width y los márgenes para que ocupe todo */
             margin: 0;
-            /* Eliminamos el border-radius para que se vea bien en los bordes rectos */
             overflow: hidden;
         }
-        /* Efecto de difuminado */
+        /* Efecto de difuminado AJUSTADO AL NUEVO COLOR DE FONDO */
         .dresscode-image-wrapper::after {
             content: '';
             position: absolute;
@@ -203,8 +200,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            /* Ajusté ligeramente el degradado para que se vea bien en pantalla completa */
-            background: radial-gradient(ellipse at center, transparent 55%, #fff 100%);
+            /* El degradado ahora termina en el mismo color del contenedor (#ebf8f6) en lugar de blanco */
+            background: radial-gradient(ellipse at center, transparent 55%, #ebf8f6 100%);
             pointer-events: none;
         }
         .dresscode-section img {
@@ -300,7 +297,7 @@
         <p>(Al terminar la misa)</p>
         <p><strong>Villa Universitaria Las Acacias</strong></p>
         
-        <a href="http://googleusercontent.com/maps.google.com/1" target="_blank" class="location-button">
+        <a href="https://www.google.com/maps/search/?api=1&query=19.561452626726197,-99.75033570042346" target="_blank" class="location-button">
             📍 Ver Recepción
         </a>
         </div>
