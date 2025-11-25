@@ -53,7 +53,8 @@
             .time-block span:first-child { font-size: 2em; }
             .time-block span:last-child { font-size: 0.8em; }
         }
-        
+        /* ================================ */
+
         /* === ESTILOS DE LLUVIA === */
         #animacion-lluvia {
             position: fixed;
@@ -83,7 +84,6 @@
         }
         #animacion-lluvia span:nth-child(odd) { background-image: url('Sobre_Dinero.png'); }
         #animacion-lluvia span:nth-child(even) { background-image: url('Regalo.png'); }
-        /* Posiciones aleatorias lluvia */
         #animacion-lluvia span:nth-child(1) { left: 10%; width: 80px; height: 80px; animation-duration: 10s; animation-delay: 0s; }
         #animacion-lluvia span:nth-child(2) { left: 20%; width: 50px; height: 50px; animation-duration: 12s; animation-delay: -3s; }
         #animacion-lluvia span:nth-child(3) { left: 30%; width: 70px; height: 70px; animation-duration: 8s; animation-delay: -5s; }
@@ -96,11 +96,11 @@
         #animacion-lluvia span:nth-child(10) { left: 15%; width: 75px; height: 75px; animation-duration: 10s; animation-delay: -5s; }
         #animacion-lluvia span:nth-child(11) { left: 45%; width: 80px; height: 80px; animation-duration: 12s; animation-delay: -9s; }
         #animacion-lluvia span:nth-child(12) { left: 85%; width: 60px; height: 60px; animation-duration: 9s; animation-delay: -10s; }
-        
-        /* === CONFIGURACIÓN DE LOS DOS FONDOS (FONDO1 y FONDO2) === */
+        /* === FIN DE ESTILOS DE LLUVIA === */
+
         .content-wrapper {
-            /* Color de respaldo por si no cargan las imágenes */
-            background-color: #fff; 
+            /* CAMBIO DE COLOR AQUÍ: Un tono menta un poco más oscuro (#CEEBE8) */
+            background-color: #CEEBE8; 
             padding: 2em; 
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -110,47 +110,12 @@
             flex-direction: column;
             gap: 1.5em;
             align-items: center;
-            position: relative; /* Necesario para que funcione el truco de capas */
+            position: relative;
             z-index: 100;
             overflow: hidden; 
-
-            /* --- CAPA 1: FONDO 2 (VA ABAJO) --- */
-            /* Esta imagen se alineará al fondo del contenedor */
-            background-image: url('Fondo2.png');
-            background-position: bottom center;
-            background-repeat: no-repeat;
-            background-size: 100% auto; /* Ajusta al ancho */
         }
 
-        /* --- CAPA 2: FONDO 1 (VA ARRIBA CON DIFUMINADO) --- */
-        .content-wrapper::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 70%; /* Ocupa el 70% superior para asegurar que cruce con el de abajo */
-            
-            background-image: url('Fondo1.png');
-            background-position: top center;
-            background-repeat: no-repeat;
-            background-size: 100% auto;
-            
-            /* Esto crea el efecto de desvanecimiento hacia abajo */
-            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-            
-            z-index: 0; /* Se queda detrás del texto */
-            pointer-events: none;
-        }
-
-        /* Aseguramos que TODO el texto esté por encima de las imágenes de fondo */
-        .content-wrapper > * {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* --- ESTILOS GENERALES DE TEXTO Y BOTONES --- */
+        /* --- NUEVOS ESTILOS PARA DETALLES --- */
         .section-divider {
             width: 80%;
             height: 2px;
@@ -209,12 +174,13 @@
             transform: translateY(-2px);
         }
         
-        /* Vestimenta: Borde a borde */
+        /* --- ESTILOS MODIFICADOS PARA VESTIMENTA (Borde a Borde) --- */
         .dresscode-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: calc(100% + 4em);
+            /* Truco para romper el padding del padre y llegar al borde */
+            width: calc(100% + 4em); /* 100% + los 2em de padding izquierdo + 2em derecho */
             margin-left: -2em;
             margin-right: -2em;
             margin-top: 1em;
@@ -226,8 +192,7 @@
             margin: 0;
             overflow: hidden;
         }
-        /* Ajuste de difuminado para la imagen de vestimenta 
-           (asumiendo que Fondo1/Fondo2 son claros, difuminamos a blanco o transparente) */
+        /* Efecto de difuminado AJUSTADO AL NUEVO COLOR MENTA MÁS OSCURO */
         .dresscode-image-wrapper::after {
             content: '';
             position: absolute;
@@ -235,7 +200,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(ellipse at center, transparent 60%, rgba(255,255,255,0.8) 100%);
+            /* El degradado ahora termina en el nuevo color #CEEBE8 */
+            background: radial-gradient(ellipse at center, transparent 55%, #CEEBE8 100%);
             pointer-events: none;
         }
         .dresscode-section img {
@@ -278,6 +244,7 @@
             background-color: #bbb;
             transform: translateY(-2px);
         }
+        /* ---------------------------------- */
 
     </style>
 </head>
