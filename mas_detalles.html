@@ -14,7 +14,7 @@
             color: #333;
             display: flex;
             justify-content: flex-start;
-            padding-top: 8em; /* Aumentado para dejar espacio a la cuenta regresiva */
+            padding-top: 8em;
             padding-bottom: 5em;
             overflow-y: auto;
             align-items: center;
@@ -100,7 +100,8 @@
 
         .content-wrapper {
             background-color: #fff;
-            padding: 2em;
+            /* IMPORTANTE: El padding aquí es 2em. Usaremos esto para calcular el borde */
+            padding: 2em; 
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             max-width: 600px;
@@ -111,6 +112,8 @@
             align-items: center;
             position: relative;
             z-index: 100;
+            /* Asegura que nada se salga del contenedor redondeado */
+            overflow: hidden; 
         }
 
         /* --- NUEVOS ESTILOS PARA DETALLES --- */
@@ -172,21 +175,42 @@
             transform: translateY(-2px);
         }
         
+        /* --- ESTILOS MODIFICADOS PARA VESTIMENTA (Borde a Borde) --- */
+        .dresscode-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Truco para romper el padding del padre y llegar al borde */
+            width: calc(100% + 4em); /* 100% + los 2em de padding izquierdo + 2em derecho */
+            margin-left: -2em;
+            margin-right: -2em;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+        .dresscode-image-wrapper {
+            position: relative;
+            width: 100%;
+            /* Eliminamos el max-width y los márgenes para que ocupe todo */
+            margin: 0;
+            /* Eliminamos el border-radius para que se vea bien en los bordes rectos */
+            overflow: hidden;
+        }
+        /* Efecto de difuminado */
+        .dresscode-image-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* Ajusté ligeramente el degradado para que se vea bien en pantalla completa */
+            background: radial-gradient(ellipse at center, transparent 55%, #fff 100%);
+            pointer-events: none;
+        }
         .dresscode-section img {
             width: 100%;
-            max-width: 250px;
             height: auto;
-            border-radius: 8px;
-        }
-        .dresscode-section p {
-            font-size: clamp(1.1rem, 3.5vw, 1.4rem);
-            font-weight: 700;
-            color: #333;
-        }
-        .dresscode-section .highlight {
-            font-size: 1.1em;
-            color: #8bb7a6;
-            font-weight: 700;
+            display: block;
         }
 
         .action-buttons {
@@ -276,7 +300,7 @@
         <p>(Al terminar la misa)</p>
         <p><strong>Villa Universitaria Las Acacias</strong></p>
         
-        <a href="https://www.google.com/maps/search/?api=1&query=19.561452626726197,-99.75033570042346" target="_blank" class="location-button">
+        <a href="http://googleusercontent.com/maps.google.com/1" target="_blank" class="location-button">
             📍 Ver Recepción
         </a>
         </div>
@@ -284,11 +308,9 @@
     <div class="section-divider"></div>
 
     <div class="dresscode-section">
-        <h2>Código de Vestimenta</h2>
-        <p>Sport Elegante</p>
-        <img src="https://i.imgur.com/vT4b3gN.png" alt="Sport Elegante: Ellos Guapos, Ellas Divinas">
-        <p style="margin-top: 15px; font-size: 1.1em;">"Ellos Guapos, Ellas Divinas"</p>
-        <p class="highlight" style="margin-top: 10px;">Nota: El color Verde está reservado para la quinceañera.</p>
+        <div class="dresscode-image-wrapper">
+            <img src="Vestimenta.png" alt="Código de Vestimenta: Casual Formal, Ellos Guapos Ellas Divinas. Nota: El color Verde está reservado para la quinceañera.">
+        </div>
     </div>
     
     <div class="section-divider"></div>
