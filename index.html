@@ -29,7 +29,7 @@
     box-sizing: border-box;
 }
 body  {
-    font-family: "Dancing Script", cursive; /* Fuente cursiva */
+    font-family: "Dancing Script", cursive;
     background: linear-gradient(to bottom right, #eaf9f6, #f3fdfb, #e6f6f2);
     color: #333;
     display: flex;
@@ -38,7 +38,7 @@ body  {
     min-height: 100vh;
     margin: 0;
     padding: 1rem;
-    overflow: hidden;
+    overflow: hidden; /* Evita scroll en el body principal */
     -webkit-tap-highlight-color: transparent;
     font-size: 1.1rem; 
 }
@@ -63,23 +63,10 @@ body  {
     text-align: center;
     font-family: "Dancing Script", cursive;
 }
-.time-block {
-    display: flex;
-    flex-direction: column;
-}
-.time-block span:first-child {
-    font-size: 1.8em;
-    font-weight: 700;
-    color: #8bb7a6;
-    line-height: 1;
-}
-.time-block span:last-child {
-    font-size: 0.9em;
-    text-transform: uppercase;
-    color: #555;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-}
+.time-block { display: flex; flex-direction: column; }
+.time-block span:first-child { font-size: 1.8em; font-weight: 700; color: #8bb7a6; line-height: 1; }
+.time-block span:last-child { font-size: 0.9em; text-transform: uppercase; color: #555; font-weight: 600; }
+
 @media (min-width: 720px) {
     .time-block span:first-child { font-size: 2.2em; }
     .time-block span:last-child { font-size: 1em; }
@@ -106,8 +93,10 @@ body  {
     --letter-delay: 0ms;
     --letter-delay-hover: calc(var(--duration) * 0.8); 
     --letter-height: calc(var(--envelope-height) - 2rem);
-    /* Altura automática al abrir para que quepa todo el texto */
-    --letter-height-hover: 400px; 
+    
+    /* CAMBIO: Aumenté la altura de la carta abierta para que quepa todo el texto */
+    --letter-height-hover: 450px; 
+    
     --fold-rotate: rotateX(0deg);
     --fold-zindex-hover: 0;
     --fold-rotate-hover: rotateX(180deg);
@@ -129,12 +118,11 @@ body  {
         --envelope-height: 250px;
         --letter-font-size: 1.6rem;
         --front-font-size: 1.25rem;
-    }
-    .envelope.abierto .letter {
-        /* Ajustamos la posición final de la carta abierta */
-        transform: translateX(-50%) translateY(-150px);
+        /* En PC la carta puede ser aún más alta */
+        --letter-height-hover: 550px; 
     }
 }
+
 .envelope::after {
     content: "";
     position: absolute;
@@ -150,6 +138,7 @@ body  {
     background: rgba(56, 6, 6, 0.4);
     filter: blur(var(--shadow-blur));
 }
+
 .envelope.abierto {
     --envelope-transform: var(--envelope-transform-hover, 0deg);
     --evelope-rotate-delay: var(--evelope-rotate-delay-hover);
@@ -161,6 +150,7 @@ body  {
     --letter-delay: var(--letter-delay-hover);
     cursor: default;
 }
+
 .envelope-inner {
     position: relative;
     width: 100%;
@@ -171,8 +161,8 @@ body  {
     transform: var(--envelope-transform);
     display: grid;
 }
-.envelope-front,
-.envelope-back {
+
+.envelope-front, .envelope-back {
     position: relative;
     grid-area: 1/1;
     width: 100%;
@@ -183,6 +173,7 @@ body  {
     perspective: 1000px;
     isolation: isolate;
 }
+
 .envelope-front {
     color: var(--envelope-clr-txt);
     display: grid;
@@ -192,15 +183,10 @@ body  {
     text-align: center;
     font-size: var(--front-font-size);
 }
-.envelope-front .address > p > span:first-child {
-    font-weight: 200;
-}
-.envelope-front .address > p > span:last-of-type {
-    font-weight: 800;
-}
-.envelope-back {
-    transform: rotateY(180deg);
-}
+.envelope-front .address > p > span:first-child { font-weight: 200; }
+.envelope-front .address > p > span:last-of-type { font-weight: 800; }
+
+.envelope-back { transform: rotateY(180deg); }
 .envelope-back::after {
     content: "";
     position: absolute;
@@ -225,6 +211,7 @@ body  {
     transition: var(--duration) ease-in-out;
     transition-delay: var(--fold-delay);
 }
+
 .letter {
     position: absolute;
     bottom: 5px;
@@ -238,7 +225,7 @@ body  {
                 transform var(--duration) ease-in-out var(--letter-delay),
                 z-index 0ms linear var(--letter-delay);
     background: var(--letter-clr-bg);
-    padding: 1.5rem;
+    padding: 1.5rem 1rem; /* Padding ajustado */
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -249,24 +236,33 @@ body  {
     border-radius: 4px;
     justify-content: center;
 }
+
 .envelope.abierto .letter {
-    /* Mueve la carta hacia arriba al abrir */
-    transform: translateX(-50%) translateY(-100px); 
+    /* CAMBIO: Reduje el número negativo (antes era -100px o -150px) 
+       Esto hace que la carta no suba tanto y no choque con el banner de arriba */
+    transform: translateX(-50%) translateY(-50px); 
+    
     z-index: 20; 
-    overflow-y: auto; /* Permite scroll si el texto es muy largo en móviles pequeños */
+    overflow-y: auto; /* IMPORTANTE: Permite deslizar el texto si aún así no cabe */
 }
 
-/* Estilos específicos del texto de la carta */
+/* Ajuste específico para PC para que suba un poquito más que en celular */
+@media (min-width: 720px) {
+    .envelope.abierto .letter {
+        transform: translateX(-50%) translateY(-80px);
+    }
+}
+
 .letter p {
-    margin: 0.2em 0;
+    margin: 0.3em 0;
     font-weight: 600;
     color: #555;
-    font-size: clamp(1rem, 4vw, 1.2rem);
-    line-height: 1.3;
+    font-size: clamp(1rem, 4vw, 1.3rem);
+    line-height: 1.4;
 }
 .letter .firma {
-    margin-top: 10px;
-    font-size: 1.3em;
+    margin-top: 15px;
+    font-size: 1.4em;
     color: #8bb7a6;
 }
 
@@ -282,6 +278,7 @@ body  {
     font-weight: bold;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+    flex-shrink: 0; /* Evita que el botón se aplaste */
 }
 .detail-button:hover {
     background-color: var(--envelope-clr-bg-side);
