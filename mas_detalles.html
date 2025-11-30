@@ -10,7 +10,14 @@
 
         body {
             font-family: "Dancing Script", cursive;
-            background: linear-gradient(to bottom right, #eaf9f6, #f3fdfb, #e6f6f2);
+            
+            /* FONDO GENERAL DE LA PÁGINA */
+            background-image: url('Fondo2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            
             color: #333;
             display: flex;
             justify-content: flex-start;
@@ -56,8 +63,15 @@
             .time-block span:last-child { font-size: 1em; }
         }
         
+        /* === CAMBIO AQUÍ: FONDO DEL CONTENEDOR CENTRAL === */
         .content-wrapper {
-            background-color: #CEEBE8; 
+            /* Se eliminó background-color: #CEEBE8; */
+            
+            /* Se agregó la imagen de fondo */
+            background-image: url('Fondo2.png');
+            background-size: cover; /* Ajusta la imagen al tamaño del cuadro */
+            background-position: center;
+            
             padding: 2em; 
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -71,6 +85,7 @@
             z-index: 100;
             overflow: hidden; 
         }
+        /* ================================================= */
 
         .section-divider {
             width: 80%;
