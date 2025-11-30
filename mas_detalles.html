@@ -94,23 +94,20 @@
             font-weight: 600;
         }
         
-        .parents-section p {
-            font-size: clamp(1.3rem, 4vw, 1.6rem);
+        p {
+            font-size: clamp(1.2rem, 3.5vw, 1.5rem);
             line-height: 1.4;
             color: #555;
             margin: 0;
+        }
+        
+        .parents-section p {
+            font-size: clamp(1.3rem, 4vw, 1.6rem);
         }
         .parents-section strong {
             font-size: 1.2em;
             color: #333;
             font-weight: 700;
-        }
-        
-        .location-section p {
-            font-size: clamp(1.2rem, 3.5vw, 1.5rem);
-            line-height: 1.4;
-            color: #555;
-            margin: 0;
         }
         
         .location-button {
@@ -132,9 +129,53 @@
             background-color: #7ba392;
             transform: translateY(-2px);
         }
+
+        /* --- ESTILOS PARA LAS IMÁGENES (Difuminado Menta) --- */
+        .photo-gallery {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            margin: 1em 0;
+        }
+        .photo-row {
+            display: flex;
+            gap: 1em;
+            justify-content: center;
+        }
+        .photo-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            flex: 1; 
+        }
+        /* El efecto de difuminado para todas las imágenes */
+        .photo-wrapper::after, .dresscode-image-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 60%, #CEEBE8 100%);
+            pointer-events: none;
+        }
+        .photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .photo-wrapper.full-width {
+            width: calc(100% + 4em);
+            margin-left: -2em;
+            margin-right: -2em;
+            border-radius: 0;
+            height: 250px; 
+        }
         
-        /* Vestimenta */
-        .dresscode-section {
+        /* Estilos compartidos para imágenes de ancho completo (Vestimenta y Regalos) */
+        .full-width-section {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -150,17 +191,7 @@
             margin: 0;
             overflow: hidden;
         }
-        .dresscode-image-wrapper::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at center, transparent 55%, #CEEBE8 100%);
-            pointer-events: none;
-        }
-        .dresscode-section img {
+        .full-width-section img {
             width: 100%;
             height: auto;
             display: block;
@@ -228,7 +259,21 @@
         <p><strong>Alejandro Martinez Reyes</strong></p>
         <p>Tengo el honor de invitarte a celebrar conmigo.</p>
     </div>
-
+    
+    <div class="photo-gallery">
+        <div class="photo-row">
+            <div class="photo-wrapper">
+                <img src="Bebe.jpg" alt="Foto de bebé">
+            </div>
+            <div class="photo-wrapper">
+                <img src="Nina.jpg" alt="Foto de niña">
+            </div>
+        </div>
+        <div class="photo-wrapper full-width">
+            <img src="RosaA.jpg" alt="Foto en el podio">
+        </div>
+    </div>
+    
     <div class="section-divider"></div>
 
     <div class="location-section">
@@ -253,9 +298,21 @@
     
     <div class="section-divider"></div>
 
-    <div class="dresscode-section">
+    <div class="full-width-section">
         <div class="dresscode-image-wrapper">
             <img src="Vestimenta.png" alt="Código de Vestimenta">
+        </div>
+    </div>
+    
+    <div class="section-divider"></div>
+
+    <div class="gift-section">
+        <h2>Mesa de Regalos</h2>
+        <p style="margin-top: 10px;">El mejor regalo es tu presencia, pero si deseas tener un detalle conmigo, puedes hacerlo en forma de presente o efectivo.</p>
+        <div class="full-width-section" style="margin-top: 1.5em;">
+            <div class="dresscode-image-wrapper">
+                <img src="Regal.png" alt="Regalos y efectivo">
+            </div>
         </div>
     </div>
     
